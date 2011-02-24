@@ -2,11 +2,10 @@
 import werkzeug.routing
 
 import app.controllers
-import app.controllers.doc
+import app.controllers.rus
 
 endpoints = {
-    "index": app.controllers.index,
-    "doc.upload": app.controllers.doc.upload,
+    "index": app.controllers.rus.browse,
     "notfound": app.controllers.notfound,
     "error": app.controllers.error,
 }
@@ -14,8 +13,8 @@ endpoints = {
 url_map = werkzeug.routing.Map()
 
 for method, path, endpoint in [
-        ("GET", "/", "index"),
-        ("GET", "/index", "index"),
+        ("GET", "/browse", "index"),
+        ("GET", "/browse/<int:page>", "index"),
         ("POST", "/upload_doc", "doc.upload"),
     ]:
     rule = werkzeug.routing.Rule(path, methods=[method], endpoint=endpoint)

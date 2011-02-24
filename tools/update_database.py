@@ -4,17 +4,14 @@ import sys
 import os
 sys.path[0] = os.path.join(os.path.dirname(__file__), "..")
 sys.path.insert(0, os.path.join(sys.path[0], "3rd-party"))
+os.chdir(sys.path[1])
 
 
 import couchdb
 from itertools import groupby
 
-from pprint import pprint
-pprint(sys.path)
-
 from app.config.generated import config
 
-os.chdir(sys.path[1])
 
 try:
     server = couchdb.Server(config["couchdb_server_url"])

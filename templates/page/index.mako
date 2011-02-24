@@ -1,37 +1,49 @@
 <%inherit file="/main.mako" />
 <h1>
-    Doctag
+    RUS-Browser
 </h1>
-
-<h3>Upload document</h3>
-<form action="${url_for("doc.upload")}" method="post" enctype="multipart/form-data">
-    <p>
-        Tags: <input type="text" name="tags" />
-        File: <input type="file" name="document" />
-    </p>
-    <p>
-        <input type="submit" value="Upload document" />
-    </p>
-</form>
-
-<h3>Dokumenter</h3>
-<form>
-    Filter: <input type="text" />
-</form>
+<p>
+%if page > 0:
+    <a href="${url_for("index", page=page-1)}">Forrige side</a>
+%else:
+    Forrige side
+%endif
+%if page < pagecount - 1:
+    | <a href="${url_for("index", page=page+1)}">Næste side</a>
+%else:
+    | Næste side
+%endif
+</p>
+<p>
+%for x in range(pagecount):
+%if x == page:
+    [${unicode(x)}]
+%else:
+    <a href="${url_for("index", page=x)}">[${unicode(x)}]</a>
+%endif
+%endfor
+</p>
 <table>
     <thead>
         <tr>
-            <th>Tags</th>
-            <th>Thumbnail</th>
+            <th>Navn</th>
+            <th>Telefon</th>
+            <th>Adresse</th>
         </tr>
     </thead>
     <tbody>
+%for (name,phone,email) in russer:
         <tr>
             <td>
-                <span>Skat</span>
-                <span>2007</span>
+                ${escape(name or "")}
+            </td>
+            <td>
+                ${escape(phone or "")}
+            </td>
+            <td>
+                ${escape(email or "")}
             </td>
         </tr>
+%endfor
     </tbody>
-
 </table>
