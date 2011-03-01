@@ -23,27 +23,35 @@
 %endif
 %endfor
 </p>
+<form action="" method="post">
 <table>
     <thead>
         <tr>
+            <th><input type="checkbox"/></th>
             <th>Navn</th>
             <th>Telefon</th>
-            <th>Adresse</th>
+            <th>E-mail</th>
         </tr>
     </thead>
     <tbody>
-%for (name,phone,email) in russer:
+%for (id, name, phone, email) in russer:
         <tr>
             <td>
-                ${escape(name or "")}
+                <input type="checkbox" />
+            </td>
+            <td>
+                <a href="${url_for("rus.edit", id=id)}">${escape(name or "")}
             </td>
             <td>
                 ${escape(phone or "")}
             </td>
             <td>
-                ${escape(email or "")}
+%if email:
+                <a href=${esc_attr("mailto:" + email)}>${escape(email)}</a>
+%endif
             </td>
         </tr>
 %endfor
     </tbody>
 </table>
+</form>
