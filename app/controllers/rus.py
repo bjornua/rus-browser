@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from app.utils.misc import template_response, local, db, url_for
-from werkzeug.utils import redirect
+from app.utils.misc import template_response, local, db, url_for, redirect
 from pprint import pprint
 
 import app.model.rus as rus
@@ -17,18 +16,27 @@ def browse(page=0):
     )
 
 def edit(id):
-    doc = db()[id]
-
+    russer = rus.info(id)
+    
     template_response("/page/rus.mako",
         id=id,
-        name=doc["name"],
-        phone=doc["phone"],
-        email=doc["email"]
+        name=russer[0],
+        phone=russer[1],
+        email=russer[2]
     )
 
 def save(id):
     name  = local.request.form.get("name","")
     phone = local.request.form.get("phone","")
     email = local.request.form.get("email","")
+    
+    if name == "":
+        name = None
+    if phone == "":
+        phone = None
+    if email == "":
+        email = None
 
-    local.response = redirect(url_for("rus.edit",id=id))
+    rus.update(id, name, phone, email)
+
+    redirect("rus.edit", id=id)

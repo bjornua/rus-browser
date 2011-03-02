@@ -6,6 +6,7 @@ import xml.sax.saxutils
 import couchdb
 import werkzeug
 import werkzeug.routing
+import werkzeug.utils
 import mako.lookup
 
 import app.widget
@@ -48,3 +49,6 @@ def template_render(templatename, **kwargs):
         "widget": app.widget
     })
     return template.render(**kwargs).decode("utf-8")
+
+def redirect(endpoint, *args, **kwargs):
+    local.response = werkzeug.utils.redirect(url_for(endpoint, *args, **kwargs))
