@@ -1,7 +1,7 @@
 function(doc)  {
     if(doc.type !== "rus") return;
     
-    emit([doc.name], null);
+    emit([doc.year, doc.rustur, doc.name], null);
     
 }
 
