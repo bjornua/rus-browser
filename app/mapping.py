@@ -22,5 +22,3 @@ for method, path, endpoint in [
     ]:
     rule = werkzeug.routing.Rule(path, methods=[method], endpoint=endpoint)
     url_map.add(rule)
-
-
